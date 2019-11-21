@@ -7,9 +7,8 @@ import AnimalForm from './animal/AnimalForm'
 
 
 
-class ApplicationViews extends Component {
+const ApplicationViews = () => {
 
-  render() {
     return (
       <React.Fragment>
         <Route exact path="/" render={(props) => {
@@ -26,7 +25,7 @@ class ApplicationViews extends Component {
         }} />
       </React.Fragment>
     )
-  }
+
 }
 
 export default ApplicationViews
