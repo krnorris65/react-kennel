@@ -1,75 +1,64 @@
-import React, { Component } from 'react';
+import React, {useState, useRef} from 'react';
 import AnimalManager from '../../modules/AnimalManager';
 import './AnimalForm.css'
 
-class AnimalForm extends Component {
-    state = {
-        animalName: "",
-        breed: "",
-        loadingStatus: false,
-    };
+const AnimalForm = props => {
+    const [newAnimal, setNewAnimal] = useState({loadingStatus:false})
 
-    handleFieldChange = evt => {
-        const stateToChange = {};
-        stateToChange[evt.target.id] = evt.target.value;
-        this.setState(stateToChange);
-    };
+    const name = useRef()
+    const breed = useRef()
 
     /*  Local method for validation, set loadingStatus, create animal      object, invoke the AnimalManager post method, and redirect to the full animal list
     */
-    constructNewAnimal = evt => {
-        evt.preventDefault();
-        if (this.state.animalName === "" || this.state.breed === "") {
+    const constructNewAnimal = (nameInput, breedInput) => {
+        if (nameInput === "" || breedInput === "") {
             window.alert("Please input an animal name and breed");
         } else {
-            this.setState({ loadingStatus: true });
+            setNewAnimal({ loadingStatus: true });
             const animal = {
-                name: this.state.animalName,
-                breed: this.state.breed,
+                name: nameInput,
+                breed: breedInput,
             };
-
             // Create the animal and redirect user to animal list
             AnimalManager.post(animal)
-            .then(() => this.props.history.push("/animals"));
+                .then(() => props.history.push("/animals"));
         }
     };
 
-    render(){
-
-        return(
-            <>
+    return (
+        <>
             <form>
                 <fieldset>
                     <div className="formgrid">
                         <input
-                        type="text"
-                        required
-                        onChange={this.handleFieldChange}
-                        id="animalName"
-                        placeholder="Animal name"
+                            type="text"
+                            required
+                            ref={name}
+                            id="animalName"
+                            placeholder="Animal name"
                         />
                         <label htmlFor="animalName">Name</label>
                         <input
-                        type="text"
-                        required
-                        onChange={this.handleFieldChange}
-                        id="breed"
-                        placeholder="Breed"
+                            type="text"
+                            required
+                            ref={breed}
+                            id="breed"
+                            placeholder="Breed"
                         />
                         <label htmlFor="breed">Breed</label>
                     </div>
                     <div className="alignRight">
                         <button
-                        type="button"
-                        disabled={this.state.loadingStatus}
-                        onClick={this.constructNewAnimal}
+                            type="button"
+                            disabled={newAnimal.loadingStatus}
+                            onClick={() => constructNewAnimal(name.current.value, breed.current.value)}
                         >Submit</button>
                     </div>
                 </fieldset>
             </form>
         </>
-        )
-    }
+    )
+
 }
 
 export default AnimalForm

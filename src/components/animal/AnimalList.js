@@ -34,7 +34,7 @@ const AnimalList = props => {
             <section className="section-content">
                 <button type="button"
                     className="btn"
-                    onClick={() => { this.props.history.push("/animals/new") }}>
+                    onClick={() => { props.history.push("/animals/new") }}>
                     Admit Animal
                     </button>
             </section>
