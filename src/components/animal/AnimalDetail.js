@@ -1,49 +1,42 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import AnimalManager from '../../modules/AnimalManager';
 import './AnimalDetail.css'
 
-class AnimalDetail extends Component {
+const AnimalDetail = props => {
 
-    state = {
-        name: "",
-        breed: "",
-        loadingStatus: true
-    }
+    const [currentAnimal, setCurrentAnimal] = useState({})
+    const [loadingStatus, setLoadingStatus] = useState(true)
 
-    componentDidMount() {
-        console.log("AnimalDetail: ComponentDidMount");
+    const getCurrentAnimal = () => {
         //get(id) from AnimalManager and hang on to the data; put it into state
-        AnimalManager.get(this.props.animalId)
+        AnimalManager.get(props.animalId)
             .then((animal) => {
-                this.setState({
-                    name: animal.name,
-                    breed: animal.breed,
-                    loadingStatus: false
-                });
+                setCurrentAnimal(animal)
+                setLoadingStatus(false)
             });
     }
 
-    handleDelete = () => {
-        this.setState({loadingStatus: true})
-        AnimalManager.delete(this.props.animalId)
-            .then(() => this.props.history.push("/animals"))
+    const handleDelete = () => {
+        setLoadingStatus(true)
+        AnimalManager.delete(props.animalId)
+            .then(() => props.history.push("/animals"))
     }
 
-    render() {
-        return (
-            <div className="card">
-                <div className="card-content">
-                    <picture>
-                        <img src={require('./dog.svg')} alt="My Dog" />
-                    </picture>
-                    <h3>Name: <span style={{ color: 'darkslategrey' }}>{this.state.name}</span></h3>
-                    <p>Breed: {this.state.breed}</p>
-                    <button type="button" disabled={this.state.loadingStatus} onClick={this.handleDelete}>Discharge</button>
+    useEffect(getCurrentAnimal, [])
 
-                </div>
+    return (
+        <div className="card">
+            <div className="card-content">
+                <picture>
+                    <img src={require('./dog.svg')} alt="My Dog" />
+                </picture>
+                <h3>Name: <span style={{ color: 'darkslategrey' }}>{currentAnimal.name}</span></h3>
+                <p>Breed: {currentAnimal.breed}</p>
+                <button type="button" disabled={loadingStatus} onClick={handleDelete}>Discharge</button>
+
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default AnimalDetail;
