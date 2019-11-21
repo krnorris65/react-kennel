@@ -20,13 +20,34 @@ class AnimalList extends Component {
             })
     }
 
+    deleteAnimal = id => {
+        AnimalManager.delete(id)
+            .then(() => {
+                AnimalManager.getAll()
+                    .then((newAnimals) => {
+                        this.setState({
+                            animals: newAnimals
+                        })
+                    })
+            })
+    }
+
     render() {
         console.log("ANIMAL LIST: Render");
 
         return (
-            <div className="container-cards">
-                {this.state.animals.map(animal => <AnimalCard key={animal.id} animal={animal}/>)}
-            </div>
+            <React.Fragment>
+                <section className="section-content">
+                    <button type="button"
+                        className="btn"
+                        onClick={() => { this.props.history.push("/animals/new") }}>
+                        Admit Animal
+                    </button>
+                </section>
+                <div className="container-cards">
+                    {this.state.animals.map(animal => <AnimalCard key={animal.id} animal={animal} deleteAnimal={this.deleteAnimal} />)}
+                </div>
+            </React.Fragment>
         )
     }
 }
