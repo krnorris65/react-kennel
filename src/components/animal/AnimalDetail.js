@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AnimalManager from '../../modules/AnimalManager';
-import './AnimalDetail.css'
+import './styles/AnimalDetail.css'
 
 const AnimalDetail = props => {
 

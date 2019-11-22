@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import AnimalManager from '../../modules/AnimalManager';
-import './AnimalForm.css'
+import './styles/AnimalForm.css'
 
 const AnimalForm = props => {
     const [loadingStatus, setLoadingStatus] = useState(false)
