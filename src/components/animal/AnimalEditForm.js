@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import AnimalManager from '../../modules/AnimalManager'
 
 const AnimalEditForm = props => {
@@ -8,19 +8,30 @@ const AnimalEditForm = props => {
 
     const getUpdateAnimal = () => {
         AnimalManager.get(props.match.params.animalId)
-        .then(animal => {
-            setLoadingStatus(false)
-            updateName.current.value = animal.name
-            updateBreed.current.value = animal.breed
-        })
+            .then(animal => {
+                setLoadingStatus(false)
+                updateName.current.value = animal.name
+                updateBreed.current.value = animal.breed
+            })
     }
     useEffect(getUpdateAnimal, [])
 
 
 
     const editAnimal = () => {
-        console.log(updateName.current.value)
-        console.log(updateBreed.current.value)
+        if (updateName.current.value === "" || updateBreed.current.value === "") {
+            window.alert("Please input an animal name and breed");
+        } else {
+            setLoadingStatus(true)
+            const editedAnimal = {
+                id: props.match.params.animalId,
+                name: updateName.current.value,
+                breed: updateBreed.current.value
+            }
+
+            AnimalManager.update(editedAnimal)
+            .then(() => props.history.push("/animals"))
+        }
     }
 
     return (
