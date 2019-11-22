@@ -4,6 +4,7 @@ import Home from './home/Home'
 import AnimalList from './animal/AnimalList'
 import AnimalDetail from './animal/AnimalDetail'
 import AnimalForm from './animal/AnimalForm'
+import AnimalEditForm from './animal/AnimalEditForm'
 
 
 
@@ -17,12 +18,16 @@ const ApplicationViews = () => {
         <Route exact path="/animals" render={(props) => {
           return <AnimalList {...props}/>
         }} />
-        <Route path="/animals/:animalId(\d+)" render={(props) => {
+        <Route exact path="/animals/:animalId(\d+)" render={(props) => {
           return <AnimalDetail animalId={parseInt(props.match.params.animalId)} {...props}/>
         }} />
         <Route path="/animals/new" render={(props) => {
             return <AnimalForm {...props}/>
         }} />
+        <Route path="/animals/:animalId(\d+)/edit" render={(props) => {
+            return <AnimalEditForm {...props}/>
+        }}/>
+
       </React.Fragment>
     )
 
