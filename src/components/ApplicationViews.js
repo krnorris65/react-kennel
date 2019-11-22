@@ -5,6 +5,7 @@ import AnimalList from './animal/AnimalList'
 import AnimalDetail from './animal/AnimalDetail'
 import AnimalForm from './animal/AnimalForm'
 import AnimalEditForm from './animal/AnimalEditForm'
+import Login from './auth/Login'
 
 
 
@@ -15,6 +16,11 @@ const ApplicationViews = () => {
         <Route exact path="/" render={(props) => {
           return <Home />
         }} />
+
+        <Route path="/login" render={(props) => {
+            return <Login />
+        }}/>
+
         <Route exact path="/animals" render={(props) => {
           return <AnimalList {...props}/>
         }} />
