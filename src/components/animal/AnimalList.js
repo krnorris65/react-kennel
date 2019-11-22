@@ -11,12 +11,28 @@ const AnimalList = props => {
 
     const getAnimals = () => {
         AnimalManager.getAll()
-            .then(allAnimals => {
-                setAnimals(allAnimals)
+        .then(allAnimals => {
+            console.log("fetch animals")
+            setAnimals(allAnimals)
             })
     }
 
+    //empty array means that it's not watching for anything to change, will run only when the component mounts
     useEffect(getAnimals, [])
+
+    //will run when the state of animals changes
+    useEffect(
+        () => {
+            console.log("animals changed", animals)
+        }, [animals]
+    )
+
+    //will run on every state change
+    useEffect(
+        () => {
+            console.log("something changed")
+        }
+    )
 
     const deleteAnimal = id => {
         AnimalManager.delete(id)
