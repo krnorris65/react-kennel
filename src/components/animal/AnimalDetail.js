@@ -11,7 +11,7 @@ const AnimalDetail = props => {
         //get(id) from AnimalManager and hang on to the data; put it into state
         AnimalManager.get(props.animalId)
             .then((animal) => {
-                setCurrentAnimal({ name: animal.name, breed: animal.breed })
+                setCurrentAnimal(animal)
                 setLoadingStatus(false)
             });
     }
