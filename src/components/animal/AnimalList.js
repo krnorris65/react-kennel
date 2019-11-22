@@ -12,7 +12,6 @@ const AnimalList = props => {
     const getAnimals = () => {
         AnimalManager.getAll()
         .then(allAnimals => {
-            console.log("fetch animals")
             setAnimals(allAnimals)
             })
     }
@@ -20,19 +19,26 @@ const AnimalList = props => {
     //empty array means that it's not watching for anything to change, will run only when the component mounts
     useEffect(getAnimals, [])
 
-    //will run when the state of animals changes
-    useEffect(
-        () => {
-            console.log("animals changed", animals)
-        }, [animals]
-    )
+    //will run when the state of animals changes, if multiple things are in the array it will run when either thing changes
+    // useEffect(
+    //     () => {
+    //         console.log("animals changed", order++, animals)
+    //     }, [animals]
+    // )
 
     //will run on every state change
-    useEffect(
-        () => {
-            console.log("something changed")
-        }
-    )
+    // useEffect(
+    //     () => {
+    //         console.log("something changed", order++)
+    //     }
+    // )
+
+    //if you want something to happen on unmount you put it within a return statement
+    // useEffect(
+    //     () => {
+    //         return () => console.log("unmount with []", order++)
+    //     }, []
+    // )
 
     const deleteAnimal = id => {
         AnimalManager.delete(id)
