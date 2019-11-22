@@ -1,32 +1,49 @@
-import { Route } from 'react-router-dom'
+import { Route, withRouter, Redirect } from 'react-router-dom'
 import React, { Component } from 'react'
 import Home from './home/Home'
 import AnimalList from './animal/AnimalList'
 import AnimalDetail from './animal/AnimalDetail'
 import AnimalForm from './animal/AnimalForm'
-
+import Login from './auth/Login'
 
 
 class ApplicationViews extends Component {
-
-  render() {
-    return (
-      <React.Fragment>
-        <Route exact path="/" render={(props) => {
-          return <Home />
-        }} />
-        <Route exact path="/animals" render={(props) => {
-          return <AnimalList {...props}/>
-        }} />
-        <Route path="/animals/:animalId(\d+)" render={(props) => {
-          return <AnimalDetail animalId={parseInt(props.match.params.animalId)} {...props}/>
-        }} />
-        <Route path="/animals/new" render={(props) => {
-            return <AnimalForm {...props}/>
-        }} />
-      </React.Fragment>
-    )
-  }
+    isAuthenticated = () => localStorage.getItem("credentials") !== null
+    render() {
+        return (
+            <React.Fragment>
+                <Route exact path="/" render={(props) => {
+                    if (this.isAuthenticated()) {
+                        return <Home />
+                    } else {
+                        return <Redirect to="/login" />
+                    }
+                }} />
+                <Route exact path="/animals" render={(props) => {
+                    if (this.isAuthenticated()) {
+                        return <AnimalList {...props} />
+                    } else {
+                        return <Redirect to="/login" />
+                    }
+                }} />
+                <Route path="/animals/:animalId(\d+)" render={(props) => {
+                    if (this.isAuthenticated()) {
+                        return <AnimalDetail animalId={parseInt(props.match.params.animalId)} {...props} />
+                    } else {
+                        return <Redirect to="/login" />
+                    }
+                }} />
+                <Route path="/animals/new" render={(props) => {
+                    if (this.isAuthenticated()) {
+                        return <AnimalForm {...props} />
+                    } else {
+                        return <Redirect to="/login" />
+                    }
+                }} />
+                <Route path="/login" component={Login} />
+            </React.Fragment>
+        )
+    }
 }
 
 export default ApplicationViews
