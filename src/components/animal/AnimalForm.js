@@ -3,7 +3,8 @@ import AnimalManager from '../../modules/AnimalManager';
 import './AnimalForm.css'
 
 const AnimalForm = props => {
-    const [newAnimal, setNewAnimal] = useState({loadingStatus:false})
+    const [loadingStatus, setLoadingStatus] = useState(false)
+
 
     const name = useRef()
     const breed = useRef()
@@ -14,7 +15,7 @@ const AnimalForm = props => {
         if (nameInput === "" || breedInput === "") {
             window.alert("Please input an animal name and breed");
         } else {
-            setNewAnimal({ loadingStatus: true });
+            setLoadingStatus(true)
             const animal = {
                 name: nameInput,
                 breed: breedInput,
@@ -50,7 +51,7 @@ const AnimalForm = props => {
                     <div className="alignRight">
                         <button
                             type="button"
-                            disabled={newAnimal.loadingStatus}
+                            disabled={loadingStatus}
                             onClick={() => constructNewAnimal(name.current.value, breed.current.value)}
                         >Submit</button>
                     </div>

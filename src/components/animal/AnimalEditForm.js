@@ -2,14 +2,14 @@ import React, {useEffect, useState, useRef} from 'react'
 import AnimalManager from '../../modules/AnimalManager'
 
 const AnimalEditForm = props => {
-    const [updateAnimal, setUpdateAnimal] = useState({loadingStatus: true})
+    const [loadingStatus, setLoadingStatus] = useState(true)
     const updateName = useRef()
     const updateBreed = useRef()
 
     const getUpdateAnimal = () => {
         AnimalManager.get(props.match.params.animalId)
         .then(animal => {
-            setUpdateAnimal({loadingStatus: false})
+            setLoadingStatus(false)
             updateName.current.value = animal.name
             updateBreed.current.value = animal.breed
         })
@@ -48,7 +48,7 @@ const AnimalEditForm = props => {
                     </div>
                     <div className="alignRight">
                         <button
-                            type="button" disabled={updateAnimal.loadingStatus}
+                            type="button" disabled={loadingStatus}
                             onClick={editAnimal}
                             className="btn btn-primary"
                         >Submit</button>
