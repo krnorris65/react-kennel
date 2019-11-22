@@ -3,21 +3,20 @@ import AnimalManager from '../../modules/AnimalManager'
 
 const AnimalEditForm = props => {
     const [updateAnimal, setUpdateAnimal] = useState({loadingStatus: true})
+    const updateName = useRef()
+    const updateBreed = useRef()
 
     const getUpdateAnimal = () => {
         AnimalManager.get(props.match.params.animalId)
         .then(animal => {
-            setUpdateAnimal({
-                animalName: animal.name, 
-                breed: animal.breed, 
-                loadingStatus: false
-            })
+            setUpdateAnimal({loadingStatus: false})
+            updateName.current.value = animal.name
+            updateBreed.current.value = animal.breed
         })
     }
     useEffect(getUpdateAnimal, [])
 
-    const updateName = useRef()
-    const updateBreed = useRef()
+
 
     const editAnimal = () => {
         console.log(updateName.current.value)
@@ -35,7 +34,6 @@ const AnimalEditForm = props => {
                             className="form-control"
                             id="animalName"
                             ref={updateName}
-                            value={updateAnimal.animalName}
                         />
                         <label htmlFor="animalName">Animal name</label>
 
@@ -45,7 +43,6 @@ const AnimalEditForm = props => {
                             className="form-control"
                             id="breed"
                             ref={updateBreed}
-                            value={updateAnimal.breed}
                         />
                         <label htmlFor="breed">Breed</label>
                     </div>
