@@ -4,6 +4,7 @@ import Home from './home/Home'
 import AnimalList from './animal/AnimalList'
 import AnimalDetail from './animal/AnimalDetail'
 import AnimalForm from './animal/AnimalForm'
+import AnimalEditForm from './animal/AnimalEditForm'
 import Login from './auth/Login'
 
 
@@ -40,6 +41,15 @@ class ApplicationViews extends Component {
                         return <Redirect to="/login" />
                     }
                 }} />
+                <Route
+                    path="/animals/:animalId(\d+)/edit" render={props => {
+                        if (this.isAuthenticated()) {
+                            return <AnimalEditForm {...props} />
+                        } else {
+                            return <Redirect to="/login" />
+                        }
+                    }}
+                />
                 <Route path="/login" component={Login} />
             </React.Fragment>
         )
