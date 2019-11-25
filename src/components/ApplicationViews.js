@@ -5,6 +5,8 @@ import AnimalList from './animal/AnimalList'
 import AnimalDetail from './animal/AnimalDetail'
 import AnimalForm from './animal/AnimalForm'
 import AnimalEditForm from './animal/AnimalEditForm'
+
+import EmployeeList from './employee/EmployeeList'
 import Login from './auth/Login'
 
 
@@ -27,6 +29,7 @@ class ApplicationViews extends Component {
                         return <Redirect to="/login" />
                     }
                 }} />
+
                 <Route exact path="/animals/:animalId(\d+)" render={(props) => {
                     if (this.isAuthenticated()) {
                         return <AnimalDetail animalId={parseInt(props.match.params.animalId)} {...props} />
@@ -50,6 +53,13 @@ class ApplicationViews extends Component {
                         }
                     }}
                 />
+                <Route exact path="/employees" render={(props) => {
+                    if (this.isAuthenticated()) {
+                        return <EmployeeList {...props} />
+                    } else {
+                        return <Redirect to="/login" />
+                    }
+                }} />
                 <Route path="/login" component={Login} />
             </React.Fragment>
         )
