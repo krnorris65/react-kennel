@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import './NavBar.css'
 
 const NavBar = props => {
+    const [loggedIn, setLogIn] = useState([])
+
 
     return (
         <header>
