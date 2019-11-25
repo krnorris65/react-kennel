@@ -19,11 +19,11 @@ class NavBar extends Component {
                 <nav>
                     <ul className="container">
                         <li><Link className="nav-link" to="/">Home</Link></li>
-                        {(this.props.user) ?
+                        {(this.props.userLoggedIn()) ?
                             <li><Link className="nav-link" to="/animals">Animals</Link></li>
                             : null}
                         <li>Locations</li>
-                        {(this.props.user) ?
+                        {(this.props.userLoggedIn()) ?
                             <>
                                 <li><Link className="nav-link" to="/employees">Employees</Link></li>
                                 <li>Owners</li>

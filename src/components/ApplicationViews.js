@@ -12,18 +12,16 @@ import Login from './auth/Login'
 
 
 class ApplicationViews extends Component {
+
+
     render() {
         return (
             <React.Fragment>
                 <Route exact path="/" render={(props) => {
-                    if (this.props.user) {
-                        return <Home />
-                    } else {
-                        return <Redirect to="/login" />
-                    }
+                    return <Home />
                 }} />
                 <Route exact path="/animals" render={(props) => {
-                    if (this.props.user) {
+                    if (this.props.userLoggedIn()) {
                         return <AnimalList {...props} />
                     } else {
                         return <Redirect to="/login" />
@@ -31,14 +29,14 @@ class ApplicationViews extends Component {
                 }} />
 
                 <Route exact path="/animals/:animalId(\d+)" render={(props) => {
-                    if (this.props.user) {
+                    if (this.props.userLoggedIn()) {
                         return <AnimalDetail animalId={parseInt(props.match.params.animalId)} {...props} />
                     } else {
                         return <Redirect to="/login" />
                     }
                 }} />
                 <Route path="/animals/new" render={(props) => {
-                    if (this.props.user) {
+                    if (this.props.userLoggedIn()) {
                         return <AnimalForm {...props} />
                     } else {
                         return <Redirect to="/login" />
@@ -46,15 +44,15 @@ class ApplicationViews extends Component {
                 }} />
                 <Route
                     path="/animals/:animalId(\d+)/edit" render={props => {
-                        if (this.props.user) {
+                        if (this.props.userLoggedIn()) {
                             return <AnimalEditForm {...props} />
                         } else {
                             return <Redirect to="/login" />
                         }
                     }}
-                />
+                    />
                 <Route exact path="/employees" render={(props) => {
-                    if (this.props.user) {
+                    if (this.props.userLoggedIn()) {
                         return <EmployeeList {...props} />
                     } else {
                         return <Redirect to="/login" />

@@ -5,11 +5,9 @@ import ApplicationViews from "./ApplicationViews"
 import "./Kennel.css"
 
 class Kennel extends Component {
-    state = {
-        user: false
-    }
-
     isAuthenticated = () => localStorage.getItem("credentials") !== null
+
+
 
     setUser = (authObj) => {
         /*
@@ -20,29 +18,19 @@ class Kennel extends Component {
             "credentials",
             JSON.stringify(authObj)
         )
-        this.setState({
-            user: this.isAuthenticated()
-        });
+
     }
 
     clearUser = () => {
         localStorage.clear()
 
-        this.setState({
-            user: this.isAuthenticated()
-        })
     }
 
-    componentDidMount() {
-        this.setState({
-            user: this.isAuthenticated()
-        })
-    }
     render() {
         return (
             <>
-                <NavBar user={this.state.user} clearUser={this.clearUser}/>
-                <ApplicationViews user={this.state.user}
+                <NavBar userLoggedIn={this.isAuthenticated} clearUser={this.clearUser}/>
+                <ApplicationViews userLoggedIn={this.isAuthenticated}
                     setUser={this.setUser} />
             </>
         )
