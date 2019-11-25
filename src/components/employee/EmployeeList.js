@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom"
 import EmployeeCard from "./EmployeeCard"
 import EmployeeManager from '../../modules/EmployeeManager'
 
@@ -22,7 +21,7 @@ class EmployeeList extends Component {
 
                 <section className="employees">
                     {
-                        this.state.employees.map(employee => <EmployeeCard employee={employee}/>)
+                        this.state.employees.map(employee => <EmployeeCard key={employee.id} employee={employee} {...this.props}/>)
                     }
                 </section>
             </React.Fragment>
