@@ -11,6 +11,9 @@ const Login = props => {
             password: password.current.value
         }
 
+        props.setUser(userInfo)
+        props.history.push("/")
+
     }
 
     return (

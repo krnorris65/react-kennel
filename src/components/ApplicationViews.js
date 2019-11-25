@@ -1,4 +1,4 @@
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import React from 'react'
 import Home from './home/Home'
 import AnimalList from './animal/AnimalList'
@@ -9,32 +9,50 @@ import Login from './auth/Login'
 
 
 
-const ApplicationViews = () => {
+const ApplicationViews = props => {
+    const setUser = props.setUser
+    const loggedIn = props.authenticated()
 
     return (
-      <React.Fragment>
-        <Route exact path="/" render={(props) => {
-          return <Home />
-        }} />
+        <React.Fragment>
+            <Route exact path="/" render={(props) => {
+                return <Home />
+            }} />
 
-        <Route path="/login" render={(props) => {
-            return <Login />
-        }}/>
+            <Route path="/login" render={(props) => {
+                return <Login setUser={setUser} {...props} />
+            }} />
 
-        <Route exact path="/animals" render={(props) => {
-          return <AnimalList {...props}/>
-        }} />
-        <Route exact path="/animals/:animalId(\d+)" render={(props) => {
-          return <AnimalDetail animalId={parseInt(props.match.params.animalId)} {...props}/>
-        }} />
-        <Route path="/animals/new" render={(props) => {
-            return <AnimalForm {...props}/>
-        }} />
-        <Route path="/animals/:animalId(\d+)/edit" render={(props) => {
-            return <AnimalEditForm {...props}/>
-        }}/>
+            <Route exact path="/animals" render={(props) => {
+                if (loggedIn) {
+                    return <AnimalList {...props} />
+                } else {
+                    return <Redirect to="/login" />
+                }
+            }} />
+            <Route exact path="/animals/:animalId(\d+)" render={(props) => {
+                if (loggedIn) {
+                    return <AnimalDetail animalId={parseInt(props.match.params.animalId)} {...props} />
+                } else {
+                    return <Redirect to="/login" />
+                }
+            }} />
+            <Route path="/animals/new" render={(props) => {
+                if (loggedIn) {
+                    return <AnimalForm {...props} />
+                } else {
+                    return <Redirect to="/login" />
+                }
+            }} />
+            <Route path="/animals/:animalId(\d+)/edit" render={(props) => {
+                if (loggedIn) {
+                    return <AnimalEditForm {...props} />
+                } else {
+                    return <Redirect to="/login" />
+                }
+            }} />
 
-      </React.Fragment>
+        </React.Fragment>
     )
 
 }
