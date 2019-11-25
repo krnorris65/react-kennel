@@ -6,7 +6,11 @@ const Login = props => {
 
     const handleLogin = (e) => {
         e.preventDefault()
-        console.log("Saved")
+        const userInfo = {
+            email: email.current.value,
+            password: password.current.value
+        }
+
     }
 
     return (
