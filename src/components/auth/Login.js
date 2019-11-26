@@ -1,8 +1,10 @@
 import React, { useRef } from 'react'
+import useSimpleAuth from '../../hooks/ui/useSimpleAuth'
 
 const Login = props => {
     const email = useRef()
     const password = useRef()
+    const { login } = useSimpleAuth()
 
     const handleLogin = (e) => {
         e.preventDefault()
@@ -11,7 +13,7 @@ const Login = props => {
             password: password.current.value
         }
 
-        props.setUser(userInfo)
+        login(userInfo)
         props.history.push("/")
 
     }
